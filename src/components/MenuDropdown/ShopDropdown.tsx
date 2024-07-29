@@ -6,35 +6,50 @@ import {
   bindHover,
   bindMenu,
 } from 'material-ui-popup-state/hooks';
+import { Link } from 'react-router-dom';
+import { ReactNode } from 'react';
 
 interface MenuDropdownProps {
-  data: { title: string; list: string[] };
+  data: {
+    icon: ReactNode;
+    title: string;
+    link: string;
+    menu: boolean;
+  };
+  location: {
+    pathname: string;
+  };
 }
 
-export default function MenuDropdown({ data }: MenuDropdownProps) {
+const list = ['usb', 'sd', 'dsads'];
+
+export default function ShopDropdown({ data, location }: MenuDropdownProps) {
   const popupState = usePopupState({
     variant: 'popover',
-    popupId: 'demoMenu',
+    popupId: 'shopMenu',
   });
 
   return (
-    <div>
-      <span
+    <li
+      className={`${location.pathname == data.link && 'bg-third text-accent'} flex h-10 items-center rounded-[2.5rem] text-base transition-all delay-75 hover:bg-third`}
+    >
+      <Link
+        to={data.link}
         {...bindHover(popupState)}
         {...bindFocus(popupState)}
-        className="flex cursor-pointer items-center space-x-2 hover:text-accent"
+        className="flex items-center px-5 transition-all delay-75 hover:text-accent"
       >
         <span>{data.title}</span>
         <FaChevronDown className="text-[0.5rem]" />
-      </span>
+      </Link>
       <HoverMenu
         {...bindMenu(popupState)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        className="-translate-x-[2%]"
+        className="mt-5 w-full"
       >
-        <ul className="m-w-auto my-2 flex flex-col space-y-2">
-          {data.list.map((item, index) => {
+        <ul className="my-2 flex w-full flex-col space-y-2">
+          {list.map((item, index) => {
             return (
               <li key={index} onClick={popupState.close}>
                 <span className="cursor-pointer px-8 text-sm font-light text-secondary hover:text-accent">
@@ -45,6 +60,6 @@ export default function MenuDropdown({ data }: MenuDropdownProps) {
           })}
         </ul>
       </HoverMenu>
-    </div>
+    </li>
   );
 }

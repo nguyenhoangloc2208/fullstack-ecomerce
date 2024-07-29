@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import CountryDropdown from './CountryDropdown';
 import { IoSearch } from 'react-icons/io5';
 import { Button } from '@mui/material';
@@ -8,9 +8,16 @@ import { IoMenu } from 'react-icons/io5';
 import { CiApple, CiBacon } from 'react-icons/ci';
 import { MdChevronRight } from 'react-icons/md';
 import { TbShieldCheck } from 'react-icons/tb';
-import MenuDropdown from './MenuDropdown/MenuDropdown';
 import { GiRawEgg } from 'react-icons/gi';
-import { PiChefHatLight, PiCoffeeLight } from 'react-icons/pi';
+import {
+  PiChefHatLight,
+  PiCoffeeLight,
+  PiCookieLight,
+  PiPlantLight,
+  PiSnowflakeLight,
+} from 'react-icons/pi';
+import HeaderDropdown from './MenuDropdown/HeaderDropdown';
+import ShopDropdown from './MenuDropdown/ShopDropdown';
 
 const language = {
   title: 'English',
@@ -38,47 +45,99 @@ const allCategories = [
     title: 'Breakfast & Dairy',
     subMenu: false,
   },
+  {
+    icon: <PiCoffeeLight className="mb-1 text-2xl" />,
+    title: 'Beverages',
+    subMenu: true,
+  },
+  {
+    icon: <PiChefHatLight className="mb-1 mt-[0.1rem] text-2xl" />,
+    title: 'Breads & Bakery',
+    subMenu: false,
+  },
+  {
+    icon: <PiSnowflakeLight className="mb-1 text-2xl" />,
+    title: 'Frozen Foods',
+    subMenu: false,
+  },
+  {
+    icon: <PiCookieLight className="text-2xl font-light" />,
+    title: 'Biscuits & Snacks',
+    subMenu: false,
+  },
+  {
+    icon: <PiPlantLight className="mb-1 text-2xl" />,
+    title: 'Grocery & Staples',
+    subMenu: false,
+  },
 ];
 
 const nav = [
   {
     icon: false,
     title: 'Home',
-    subMenu: true,
+    menu: false,
+    link: '/',
   },
   {
     icon: false,
     title: 'Shop',
-    subMenu: true,
+    menu: true,
+    link: '/shop',
   },
   {
     icon: <CiBacon className="mr-1 text-2xl" />,
-    title: 'Meat & Seafood',
-    subMenu: false,
+    title: 'Meats & Seafood',
+    menu: false,
+    link: '/product-category/meats-seafood',
   },
   {
     icon: <PiChefHatLight className="mr-1 mt-[0.1rem] text-xl" />,
     title: 'Bakery',
-    subMenu: false,
+    menu: false,
+    link: '/product-category/breads-bakery',
   },
   {
     icon: <PiCoffeeLight className="mr-1 text-xl" />,
     title: 'Beverages',
-    subMenu: false,
+    menu: false,
+    link: '/product-category/beverages',
   },
   {
     icon: false,
     title: 'Blog',
-    subMenu: false,
+    menu: false,
+    link: '/blog',
   },
   {
     icon: false,
     title: 'Contact',
-    subMenu: false,
+    menu: false,
+    link: '/contact',
+  },
+];
+
+const header = [
+  {
+    title: 'About Us',
+    link: '/about-us',
+  },
+  {
+    title: 'My Account',
+    link: '/about-us',
+  },
+  {
+    title: 'Wish list',
+    link: '/about-us',
+  },
+  {
+    title: 'Order Tracking',
+    link: '/about-us',
   },
 ];
 
 export default function Header() {
+  const location = useLocation();
   return (
     <div>
       <section className="bg-header py-2">
@@ -89,23 +148,21 @@ export default function Header() {
           </p>
         </div>
       </section>
-      <section>
+      <section className="border-b border-b-gray-300">
         <div className="container flex h-8 text-sm font-light">
           <div className="mr-auto">
             <nav className="h-full">
               <ul className="flex h-full items-center space-x-2">
-                <li className="text-secondary transition-all delay-75 ease-in-out hover:text-accent">
-                  <Link to={'/'}>About us</Link>
-                </li>
-                <li className="text-secondary transition-all delay-75 ease-in-out hover:text-accent">
-                  <Link to={'/'}>My account</Link>
-                </li>
-                <li className="text-secondary transition-all delay-75 ease-in-out hover:text-accent">
-                  <Link to={'/'}>Wish list</Link>
-                </li>
-                <li className="text-secondary transition-all delay-75 ease-in-out hover:text-accent">
-                  <Link to={'/'}>Order Tracking</Link>
-                </li>
+                {header.map((item, index) => {
+                  return (
+                    <li
+                      key={index}
+                      className="text-secondary transition-all delay-75 ease-in-out hover:text-accent"
+                    >
+                      <Link to={item.link}>{item.title}</Link>
+                    </li>
+                  );
+                })}
               </ul>
             </nav>
           </div>
@@ -121,8 +178,8 @@ export default function Header() {
               </a>
             </div>
             <div className="flex space-x-4">
-              <MenuDropdown data={language} />
-              <MenuDropdown data={usd} />
+              <HeaderDropdown data={language} />
+              <HeaderDropdown data={usd} />
             </div>
           </div>
         </div>
@@ -169,21 +226,21 @@ export default function Header() {
           </div>
         </div>
       </header>
-      <nav className="w-full border border-b-gray-300 pb-5">
+      <nav className="w-full border-b border-b-gray-300 pb-5">
         <div className="container flex">
           <Button className="relative mr-auto mt-2 flex items-center justify-center rounded-[3.125rem] bg-header px-4 py-3 text-primary">
             <IoMenu className="text-xl" />
             <span className="pl-2 pr-5">All categories</span>
             <FaChevronDown className="text-xs" />
-            <div className="font-dosis absolute -bottom-1 ml-0 flex h-[1.125rem] -translate-x-3 items-center rounded-2xl border border-primary bg-gray-400 px-2 text-center text-[0.6rem] font-semibold">
+            <div className="absolute -bottom-1 ml-0 flex h-[1.125rem] -translate-x-3 items-center rounded-2xl border border-primary bg-gray-400 px-2 text-center font-dosis text-[0.6rem] font-semibold">
               TOTAL 88 PRODUCTS
             </div>
             <div className="absolute left-0 top-[142%] min-w-[270px] border border-gray-300">
-              <ul className="mt-3">
+              <ul className="my-4">
                 {allCategories.map((item, index) => {
                   return (
                     <li key={index} className="h-12">
-                      <Button className="relative flex w-full items-center justify-start px-4 text-sm font-normal capitalize text-gray-500 hover:bg-white hover:text-accent">
+                      <Button className="relative flex w-full items-center justify-start pl-6 pr-4 text-sm font-normal capitalize text-gray-500 hover:bg-white hover:text-accent">
                         {item.icon}
                         <span className="ml-4 text-sm">{item.title}</span>
                         {item.subMenu && (
@@ -194,25 +251,44 @@ export default function Header() {
                   );
                 })}
               </ul>
+              <ul className="flex flex-col space-y-1 border-t border-t-gray-300 py-4">
+                <li>
+                  <Button className="relative flex w-full items-center justify-start px-6 text-sm font-normal capitalize text-gray-500 hover:bg-white hover:text-accent">
+                    <span className="text-sm">Value of the Day</span>
+                  </Button>
+                </li>
+                <li>
+                  <Button className="relative flex w-full items-center justify-start px-6 text-sm font-normal capitalize text-gray-500 hover:bg-white hover:text-accent">
+                    <span className="text-sm">Top 100 Offers</span>
+                  </Button>
+                </li>
+                <li>
+                  <Button className="relative flex w-full items-center justify-start px-6 text-sm font-normal capitalize text-gray-500 hover:bg-white hover:text-accent">
+                    <span className="text-sm">New Arrivals</span>
+                  </Button>
+                </li>
+              </ul>
             </div>
           </Button>
           <nav className="ml-auto">
-            <ul className="font-dosis flex h-full items-end uppercase">
+            <ul className="flex h-full items-end font-dosis uppercase">
               {nav.map((item, index) => {
+                if (item.menu)
+                  return (
+                    <ShopDropdown location={location} data={item} key={index} />
+                  );
                 return (
                   <li
                     key={index}
-                    className="hover:bg-third flex h-10 items-center rounded-[2.5rem] text-base transition-all delay-75"
+                    className={`${location.pathname == item.link && 'bg-third text-accent'} flex h-10 items-center rounded-[2.5rem] text-base transition-all delay-75 hover:bg-third`}
                   >
                     <Link
-                      to={'/'}
+                      to={item.link}
                       className="flex items-center px-5 transition-all delay-75 hover:text-accent"
                     >
                       {item.icon && item.icon}
                       {item.title}
-                      {item.subMenu && (
-                        <FaChevronDown className="ml-2 text-xs" />
-                      )}
+                      {item.menu && <FaChevronDown className="ml-2 text-xs" />}
                     </Link>
                   </li>
                 );

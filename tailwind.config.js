@@ -4,6 +4,10 @@ export default {
   important: true,
   theme: {
     extend: {
+      backgroundImage: {
+        'custom-gradient':
+          'linear-gradient(90deg, rgba(0, 184, 83, 0.2) 0%, rgba(32, 55, 88, 0) 100%)',
+      },
       container: {
         center: true,
         padding: '1rem',
@@ -17,6 +21,7 @@ export default {
       fontFamily: {
         sans: ['Lato', 'sans-serif'],
         dosis: ['Dosis', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       backgroundColor: {
         primary: 'var(--color-bg-primary)',
