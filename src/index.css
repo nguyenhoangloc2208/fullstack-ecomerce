@@ -19,6 +19,10 @@
   display: none;
 }
 
+.slick-arrow {
+  display: none !important;
+}
+
 .dark {
   --color-bg-primary: #2d3748;
   --color-bg-secondary: #283141;

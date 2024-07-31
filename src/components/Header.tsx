@@ -235,7 +235,7 @@ export default function Header() {
             <div className="absolute -bottom-1 ml-0 flex h-[1.125rem] -translate-x-3 items-center rounded-2xl border border-primary bg-gray-400 px-2 text-center font-dosis text-[0.6rem] font-semibold">
               TOTAL 88 PRODUCTS
             </div>
-            <div className="absolute left-0 top-[142%] min-w-[270px] border border-gray-300">
+            <div className="absolute left-0 top-[142%] min-w-[280px] border border-gray-300">
               <ul className="my-4">
                 {allCategories.map((item, index) => {
                   return (

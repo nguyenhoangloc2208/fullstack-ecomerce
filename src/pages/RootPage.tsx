@@ -16,7 +16,7 @@ export default function RootPage() {
     <ThemeProvider initialTheme={priTheme}>
       <div className="flex h-screen flex-col font-sans text-base font-medium transition-all delay-75 ease-in-out">
         <Header />
-        <main className="container flex-1 py-4">
+        <main className="container flex-1 py-4 leading-[1.4]">
           <Outlet />
         </main>
       </div>
